@@ -37,7 +37,7 @@ body{
   display:grid; place-items:center;
 }
 .card{
-  width:min(480px, 96vw); background:var(--card); border-radius:20px;
+  width:min(520px, 96vw); background:var(--card); border-radius:20px;
   box-shadow:0 14px 40px rgba(16,185,129,.18);
   border:1px solid var(--line);
   padding:18px;
@@ -47,44 +47,38 @@ body{
   flex:1; text-align:center; padding:10px 0; border-radius:10px; cursor:pointer; user-select:none;
   font-weight:700; color:var(--sub);
 }
-.tab.active{
-  background:#fff; color:var(--text); border:1px solid var(--line);
-}
+.tab.active{ background:#fff; color:var(--text); border:1px solid var(--line) }
 .panel{display:none}
 .panel.active{display:block}
 
-.swap-card{
-  display:flex; flex-direction:column; gap:10px;
-}
-.row{
-  background:#f6fdf9; border:1px solid var(--line); border-radius:14px; padding:12px;
-}
+.row{background:#f6fdf9; border:1px solid var(--line); border-radius:14px; padding:12px}
 .row-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:8px}
 .token{
   display:flex; gap:8px; align-items:center;
-  background:#fff; border:1px solid var(--line); padding:8px 10px; border-radius:12px; min-width:140px;
+  background:#fff; border:1px solid var(--line); padding:8px 10px; border-radius:12px; min-width:160px;
 }
 .token select{border:0; outline:0; background:transparent; font-weight:700}
 .amt input{
   width:100%; border:0; outline:0; background:transparent;
   font-size:20px; font-weight:700; text-align:right;
 }
+
 .cta{
   width:100%; border:0; padding:14px; color:#fff; font-weight:800; border-radius:14px;
   background:linear-gradient(90deg,var(--g1),var(--g2)); cursor:pointer; margin-top:8px;
 }
-.mini{font-size:12px; color:var(--sub); margin-top:6px}
-.kv{display:flex; justify-content:space-between; font-size:12px; color:var(--sub)}
-.divider{height:1px; background:var(--line); margin:10px 0}
-
+.two{display:grid; grid-template-columns:1fr 1fr; gap:10px}
 .input{
   width:100%; border:1px solid var(--line); border-radius:12px; padding:10px; background:#f6fdf9;
 }
-.two{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+
+.kv{display:flex; justify-content:space-between; font-size:12px; color:var(--sub); margin-top:6px}
+.mini{font-size:12px; color:var(--sub); margin-top:6px}
+.divider{height:1px; background:var(--line); margin:10px 0}
 
 pre{
   background:#f1fbf5; border:1px solid var(--line); color:#0b3b35;
-  padding:12px; border-radius:12px; white-space:pre-wrap; font-size:12px; margin-top:12px; max-height:220px; overflow:auto;
+  padding:12px; border-radius:12px; white-space:pre-wrap; font-size:12px; margin-top:12px; max-height:240px; overflow:auto;
 }
 footer{max-width:1000px; margin:12px auto 24px; text-align:center; color:#588b83; font-size:12px}
 </style>
@@ -92,7 +86,7 @@ footer{max-width:1000px; margin:12px auto 24px; text-align:center; color:#588b83
 <body>
   <header class="header">
     <div class="brand">
-      <!-- Logo SVG Stable vibe -->
+      <!-- Logo SVG -->
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
         <circle cx="32" cy="32" r="30" fill="#10b981"/>
         <path fill="#fff" d="M20 32a12 12 0 0 1 24 0a12 12 0 0 1-24 0zm12-20a20 20 0 1 0 0 40a20 20 0 1 0 0-40z"/>
@@ -109,45 +103,35 @@ footer{max-width:1000px; margin:12px auto 24px; text-align:center; color:#588b83
         <div id="tabLiq" class="tab">Liquidity</div>
       </div>
 
-      <!-- SWAP PANEL -->
+      <!-- SWAP -->
       <div id="panelSwap" class="panel active">
-        <div class="swap-card">
-          <div class="row">
-            <div class="row-top">
-              <div class="token">
-                <select id="fromToken"></select>
-              </div>
-              <div class="amt"><input id="fromAmount" type="number" placeholder="0.0" /></div>
-            </div>
-            <div class="kv"><span>Balance:</span><span id="balFrom">-</span></div>
+        <div class="row">
+          <div class="row-top">
+            <div class="token"><select id="fromToken"></select></div>
+            <div class="amt"><input id="fromAmount" type="number" placeholder="0.0" /></div>
           </div>
-
-          <div class="row">
-            <div class="row-top">
-              <div class="token">
-                <select id="toToken"></select>
-              </div>
-              <div class="amt"><input id="toAmount" type="number" placeholder="0.0" /></div>
-            </div>
-            <div class="kv"><span>Balance:</span><span id="balTo">-</span></div>
-          </div>
-
-          <button id="btnSwap" class="cta">Swap</button>
-          <div class="mini" id="priceBox">Price: -</div>
+          <div class="kv"><span>Balance:</span><span id="balFrom">-</span></div>
         </div>
+        <div class="row" style="margin-top:8px">
+          <div class="row-top">
+            <div class="token"><select id="toToken"></select></div>
+            <div class="amt"><input id="toAmount" type="number" placeholder="0.0" /></div>
+          </div>
+          <div class="kv"><span>Balance:</span><span id="balTo">-</span></div>
+        </div>
+        <button id="btnSwap" class="cta">Swap</button>
+        <div class="mini" id="priceBox">Price: -</div>
       </div>
 
-      <!-- LIQUIDITY PANEL -->
+      <!-- LIQUIDITY -->
       <div id="panelLiq" class="panel">
         <div class="two">
-          <div>
-            <div class="mini">Base (gUSDT)</div>
-            <input id="liqBase" class="input" type="number" placeholder="0.0" />
-          </div>
-          <div>
-            <div class="mini">Quote</div>
-            <input id="liqQuote" class="input" type="number" placeholder="0.0" />
-          </div>
+          <div class="token"><select id="liqTokenA"></select></div>
+          <div class="token"><select id="liqTokenB"></select></div>
+        </div>
+        <div class="two" style="margin-top:8px">
+          <input id="liqAmtA" class="input" type="number" placeholder="Amount A (0.0)" />
+          <input id="liqAmtB" class="input" type="number" placeholder="Amount B (0.0)" />
         </div>
         <div class="two" style="margin-top:8px">
           <button id="btnAdd" class="cta">Add Liquidity</button>
@@ -155,7 +139,12 @@ footer{max-width:1000px; margin:12px auto 24px; text-align:center; color:#588b83
         </div>
         <div class="divider"></div>
         <div class="kv"><span>Reserves</span><span id="reservesBox">-</span></div>
-        <div class="kv"><span>LP Balance</span><span id="lpBox">-</span></div>
+        <div class="two" style="margin-top:8px">
+          <input id="lpAmt" class="input" type="number" placeholder="LP to remove (18d) ex: 0.1" />
+          <div class="input" style="display:flex;align-items:center;justify-content:space-between">
+            <span>LP Balance</span><span id="lpBox">-</span>
+          </div>
+        </div>
       </div>
 
       <pre id="log">log siap...</pre>
@@ -170,26 +159,24 @@ footer{max-width:1000px; margin:12px auto 24px; text-align:center; color:#588b83
    ========================= */
 const STABLE = { id: 2201, hex: "0x899", rpc: "https://stable-jsonrpc.testnet.chain0.dev" };
 
-/* Token hardcoded (ganti jika berbeda di jaringanmu) */
+// Token hardcoded (ganti jika berbeda di jaringanmu)
 const TOKENS = {
   gUSDT:  { symbol:"gUSDT", addr:"0x701f3927871EfcEa1235dB722f9E608aE120d243", decimals:6 },
   USDT0:  { symbol:"USDT0", addr:"0x78cf24370174180738c5b8e352b6d14c83a6c9a9", decimals:6 },
   USDC:   { symbol:"USDC",  addr:"0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238", decimals:6 },
   DAI:    { symbol:"DAI",   addr:"0x0000000000000000000000000000000000000dAi", decimals:18 }, // mock
   WBTC:   { symbol:"WBTC",  addr:"0x000000000000000000000000000000000000wBtC", decimals:8  }, // mock
-  MOCKETH:{ symbol:"ETH",   addr:"0x000000000000000000000000000000000000eTh", decimals:18 }  // mock ERC20
+  MOCKETH:{ symbol:"ETH",   addr:"0x000000000000000000000000000000000000eTh", decimals:18 }  // mock ERC20 (bukan native)
 };
 
-/* AMM/Router address (HARDCODED) — implementasi Token↔Token (base gUSDT vs Quote) */
+// AMM/Router Token-Token (generic) — fungsi menerima base & quote di setiap call
 const AMM = {
-  addr: "0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90" // ganti kalau kamu punya router/AMM sendiri
+  addr: "0xcAB8F3ed8528655E0C2fad1C504c6CfEccf50B90"
 };
 
-/* ABIs — asumsi AMM Token-Token (base=gUSDT, quote=ERC20) */
+// ABIs
 const TT_AMM_ABI = [
-  "function base() view returns (address)",
-  "function quote() view returns (address)",
-  "function getPair(address _base, address _quote) view returns (uint256 baseRes, uint256 quoteRes)", // optional; fallback to global reserves if not exists
+  "function getPair(address _base, address _quote) view returns (uint256 baseRes, uint256 quoteRes)",
   "function getReserves() view returns (uint256 baseRes, uint256 quoteRes)",
   "function totalSupplyLP() view returns (uint256)",
   "function balanceOfLP(address) view returns (uint256)",
@@ -198,7 +185,6 @@ const TT_AMM_ABI = [
   "function swapExactBaseForQuote(address _base, address _quote, uint256 baseIn, uint256 minQuoteOut)",
   "function swapExactQuoteForBase(address _base, address _quote, uint256 quoteIn, uint256 minBaseOut)"
 ];
-
 const ERC20_ABI = [
   "function decimals() view returns (uint8)",
   "function balanceOf(address) view returns (uint256)",
@@ -214,220 +200,217 @@ const log = m => { const el=$("log"); el.textContent += (el.textContent? "\n":""
 
 let provider, signer, me;
 
-async function ensureStable() {
-  const net = await provider.getNetwork();
-  if (Number(net.chainId) === STABLE.id) return;
-  try {
-    await window.ethereum.request({ method:"wallet_switchEthereumChain", params:[{ chainId: STABLE.hex }] });
-  } catch(e){
-    if (e.code === 4902) {
-      await window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [{
-          chainId: STABLE.hex, chainName:"Stable Testnet",
-          rpcUrls:[STABLE.rpc], nativeCurrency:{ name:"ETH", symbol:"ETH", decimals:18 },
-          blockExplorerUrls:["https://blockscout.testnet.stable.xyz"]
-        }]
-      });
+function getTokenInfo(sym){ return TOKENS[sym]; }
+function parseU(v, d){ return ethers.utils.parseUnits(String(v||"0"), d); }
+function fmtU(v, d){ return ethers.utils.formatUnits(v, d); }
+
+function fillSelect(id){
+  const sel=$(id); sel.innerHTML="";
+  for (const k of Object.keys(TOKENS)){
+    const o=document.createElement("option");
+    o.value=k; o.textContent=TOKENS[k].symbol;
+    sel.appendChild(o);
+  }
+}
+
+function initSelects(){
+  fillSelect("fromToken"); fillSelect("toToken");
+  $("fromToken").value="gUSDT"; $("toToken").value="USDT0";
+
+  fillSelect("liqTokenA"); fillSelect("liqTokenB");
+  $("liqTokenA").value="gUSDT"; $("liqTokenB").value="USDT0";
+}
+
+async function ensureStable(){
+  const n=await provider.getNetwork();
+  if(Number(n.chainId)===STABLE.id) return;
+  try{
+    await window.ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:STABLE.hex}]});
+  }catch(e){
+    if(e.code===4902){
+      await window.ethereum.request({method:"wallet_addEthereumChain",params:[{
+        chainId:STABLE.hex, chainName:"Stable Testnet",
+        rpcUrls:[STABLE.rpc], blockExplorerUrls:["https://blockscout.testnet.stable.xyz"],
+        nativeCurrency:{name:"ETH",symbol:"ETH",decimals:18}
+      }]});
     } else { throw e; }
   }
 }
 
-function fillTokenSelects(){
-  const entries = Object.values(TOKENS);
-  for (const selId of ["fromToken","toToken"]) {
-    const sel = $(selId); sel.innerHTML = "";
-    entries.forEach(t=>{
-      const o = document.createElement("option");
-      o.value = t.symbol; o.textContent = t.symbol;
-      sel.appendChild(o);
-    });
-  }
-  // default: gUSDT -> USDT0
-  $("fromToken").value = "gUSDT";
-  $("toToken").value = "USDT0";
-}
-
-function getTokenInfo(sym){ return TOKENS[sym]; }
-function parseU(val,dec){ return ethers.utils.parseUnits(String(val||"0"), dec); }
-function fmtU(bn,dec){ return ethers.utils.formatUnits(bn, dec); }
-
 async function connect(){
   try{
-    if(!window.ethereum) throw new Error("MetaMask/OKX/Trust belum aktif.");
-    provider = new ethers.providers.Web3Provider(window.ethereum,"any");
+    if(!window.ethereum) throw new Error("Wallet belum aktif.");
+    provider=new ethers.providers.Web3Provider(window.ethereum,"any");
     await provider.send("eth_requestAccounts",[]);
-    signer = provider.getSigner();
-    me = await signer.getAddress();
+    signer=provider.getSigner(); me=await signer.getAddress();
     await ensureStable();
-    const n = await provider.getNetwork();
+    const n=await provider.getNetwork();
     $("btnConnect").textContent = me.slice(0,6)+"…"+me.slice(-4);
     log(`✅ Connected: ${me}\nChain: ${n.chainId}`);
-    await refreshBalances();
-    await refreshReserves();
+    await refreshSwapBalances();
+    await refreshSwapReserves();
+    await refreshLiqPanel();
   }catch(e){ log("❌ Connect error: "+(e.message||e)); }
 }
 
-async function refreshBalances(){
-  try{
-    const f = getTokenInfo($("fromToken").value);
-    const t = getTokenInfo($("toToken").value);
-    const bf = await new ethers.Contract(f.addr, ERC20_ABI, provider).balanceOf(me);
-    const bt = await new ethers.Contract(t.addr, ERC20_ABI, provider).balanceOf(me);
-    $("balFrom").textContent = fmtU(bf, f.decimals);
-    $("balTo").textContent   = fmtU(bt, t.decimals);
-  }catch(e){ $("balFrom").textContent="-"; $("balTo").textContent="-"; }
-}
-
-async function refreshReserves(){
-  try{
-    const c = new ethers.Contract(AMM.addr, TT_AMM_ABI, provider);
-    const b = getTokenInfo("gUSDT").addr;
-    const q = getTokenInfo($("toToken").value).addr;
-    let baseRes, quoteRes;
-    try {
-      const r = await c.getPair(b, q);
-      baseRes = r.baseRes || r[0]; quoteRes = r.quoteRes || r[1];
-    } catch {
-      const r = await c.getReserves();
-      baseRes = r.baseRes || r[0]; quoteRes = r.quoteRes || r[1];
-    }
-    const bDec = getTokenInfo("gUSDT").decimals;
-    const qDec = getTokenInfo($("toToken").value).decimals;
-    $("reservesBox").textContent = `gUSDT ${fmtU(baseRes,bDec)} | ${$("toToken").value} ${fmtU(quoteRes,qDec)}`;
-    // naive price
-    const p = Number(fmtU(quoteRes,qDec)) / Math.max(Number(fmtU(baseRes,bDec)), 1e-12);
-    $("priceBox").textContent = `Price: 1 gUSDT ≈ ${isFinite(p)?p.toFixed(6):'-'} ${$("toToken").value}`;
-  }catch(e){ $("reservesBox").textContent="-"; $("priceBox").textContent="Price: -"; }
-}
-
-async function ensureApprove(tokenAddr, spender, amount){
-  const erc = new ethers.Contract(tokenAddr, ERC20_ABI, signer);
-  const allow = await erc.allowance(me, spender);
-  if (allow.gte(amount)) return;
-  const tx = await erc.approve(spender, amount);
-  log(`🧾 Approve: ${tx.hash}`);
-  await tx.wait();
-  log("✅ Approve sukses");
+async function balance(addr, sym){
+  try{ const t=new ethers.Contract(TOKENS[sym].addr, ERC20_ABI, provider); return await t.balanceOf(addr); }
+  catch{ return ethers.constants.Zero; }
 }
 
 /* =========================
    SWAP
    ========================= */
+async function refreshSwapBalances(){
+  try{
+    const f=getTokenInfo($("fromToken").value);
+    const t=getTokenInfo($("toToken").value);
+    const bf=await balance(me,f.symbol);
+    const bt=await balance(me,t.symbol);
+    $("balFrom").textContent=fmtU(bf,f.decimals);
+    $("balTo").textContent  =fmtU(bt,t.decimals);
+  }catch{ $("balFrom").textContent="-"; $("balTo").textContent="-"; }
+}
+
+async function refreshSwapReserves(){
+  try{
+    const c=new ethers.Contract(AMM.addr, TT_AMM_ABI, provider);
+    const base=getTokenInfo($("fromToken").value), quote=getTokenInfo($("toToken").value);
+    // Hanya support pair yang melibatkan gUSDT agar simpel
+    if(base.symbol!=="gUSDT" && quote.symbol!=="gUSDT"){ $("priceBox").textContent="Price: hanya pair dengan gUSDT"; return; }
+    const b = (base.symbol==="gUSDT")? base.addr : quote.addr;
+    const q = (base.symbol==="gUSDT")? quote.addr: base.addr;
+    const res = await c.getPair(b,q).catch(()=>c.getReserves());
+    const baseRes = res.baseRes ?? res[0], quoteRes = res.quoteRes ?? res[1];
+    const bDec = getTokenInfo("gUSDT").decimals;
+    const qDec = (b===base.addr)? quote.decimals : base.decimals;
+    const p = Number(fmtU(quoteRes,qDec)) / Math.max(Number(fmtU(baseRes,bDec)),1e-12);
+    $("priceBox").textContent = `Price: 1 gUSDT ≈ ${isFinite(p)?p.toFixed(6):'-'} ${ (b===base.addr)? quote.symbol: base.symbol }`;
+  }catch{ $("priceBox").textContent="Price: -"; }
+}
+
+async function ensureApprove(tokenAddr, spender, amount){
+  const erc=new ethers.Contract(tokenAddr, ERC20_ABI, signer);
+  const a=await erc.allowance(me, spender);
+  if(a.gte(amount)) return;
+  const tx=await erc.approve(spender, amount);
+  log(`🧾 Approve: ${tx.hash}`); await tx.wait(); log("✅ Approve sukses");
+}
+
 async function onSwap(){
   try{
-    const fromSym = $("fromToken").value;
-    const toSym   = $("toToken").value;
-    if (fromSym === toSym) return alert("Pilih token berbeda.");
+    const fromSym=$("fromToken").value, toSym=$("toToken").value;
+    if(fromSym===toSym) return alert("Pilih token berbeda.");
+    if(fromSym!=="gUSDT" && toSym!=="gUSDT") return alert("Untuk v3.5, pilih salah satu sisi gUSDT.");
 
-    const from = getTokenInfo(fromSym);
-    const to   = getTokenInfo(toSym);
-    const amt  = $("fromAmount").value.trim();
-    if(!amt) return alert("Isi jumlah swap.");
+    const from=getTokenInfo(fromSym), to=getTokenInfo(toSym);
+    const amount=$("fromAmount").value.trim();
+    if(!amount) return alert("Isi jumlah swap.");
 
-    const base = getTokenInfo("gUSDT");
-    const amm  = new ethers.Contract(AMM.addr, TT_AMM_ABI, signer);
-
-    // Arahkan fungsi berdasarkan arah
-    if (fromSym === "gUSDT") {
-      // swapExactBaseForQuote(baseIn, minQuoteOut)
-      const inAmt  = parseU(amt, base.decimals);
-      await ensureApprove(base.addr, AMM.addr, inAmt);
-      const minOut = ethers.BigNumber.from(0);
-      log("🔄 Swap gUSDT → "+to.symbol+"...");
-      const tx = await amm.swapExactBaseForQuote(base.addr, to.addr, inAmt, minOut);
-      log("⏳ TX: "+tx.hash); await tx.wait();
-      log("✅ Swap sukses!");
-    } else if (toSym === "gUSDT") {
-      // swapExactQuoteForBase(quoteIn, minBaseOut)
-      const inAmt  = parseU(amt, from.decimals);
+    const c=new ethers.Contract(AMM.addr, TT_AMM_ABI, signer);
+    if(fromSym==="gUSDT"){
+      const inAmt=parseU(amount, from.decimals);
       await ensureApprove(from.addr, AMM.addr, inAmt);
-      const minOut = ethers.BigNumber.from(0);
-      log("🔁 Swap "+from.symbol+" → gUSDT...");
-      const tx = await amm.swapExactQuoteForBase(base.addr, from.addr, inAmt, minOut);
-      log("⏳ TX: "+tx.hash); await tx.wait();
-      log("✅ Swap sukses!");
-    } else {
-      // indirect: QuoteA -> gUSDT -> QuoteB (2 leg) — untuk v3 ini kita tolak agar simple
-      return alert("Pair non-gUSDT belum diaktifkan. Pilih salah satu sisi gUSDT.");
+      log(`🔄 Swap gUSDT → ${to.symbol}...`);
+      const tx=await c.swapExactBaseForQuote(from.addr, to.addr, inAmt, 0);
+      log("⏳ TX: "+tx.hash); await tx.wait(); log("✅ Swap sukses!");
+    }else{
+      const inAmt=parseU(amount, from.decimals);
+      await ensureApprove(from.addr, AMM.addr, inAmt);
+      log(`🔁 Swap ${from.symbol} → gUSDT...`);
+      const tx=await c.swapExactQuoteForBase(getTokenInfo("gUSDT").addr, from.addr, inAmt, 0);
+      log("⏳ TX: "+tx.hash); await tx.wait(); log("✅ Swap sukses!");
     }
-
-    await refreshBalances();
-    await refreshReserves();
+    await refreshSwapBalances();
+    await refreshSwapReserves();
   }catch(e){ log("❌ Swap error: "+(e.reason||e.message||e)); }
 }
 
 /* =========================
-   LIQUIDITY
+   LIQUIDITY (any pair)
    ========================= */
+function liqPair(){
+  const A=getTokenInfo($("liqTokenA").value);
+  const B=getTokenInfo($("liqTokenB").value);
+  if(A.symbol===B.symbol) throw new Error("Token A dan B harus berbeda.");
+  return [A,B];
+}
+
+async function refreshLiqPanel(){
+  try{
+    const [A,B]=liqPair();
+    const c=new ethers.Contract(AMM.addr, TT_AMM_ABI, provider);
+    const res=await c.getPair(A.addr,B.addr).catch(()=>c.getReserves());
+    const aRes=res.baseRes ?? res[0], bRes=res.quoteRes ?? res[1];
+    $("reservesBox").textContent = `${A.symbol} ${fmtU(aRes,A.decimals)} | ${B.symbol} ${fmtU(bRes,B.decimals)}`;
+
+    // LP balance (global; asumsinya satu LP untuk AMM; jika LP per pair, sesuaikan kontrak)
+    const lp=await c.balanceOfLP(me);
+    $("lpBox").textContent = `${fmtU(lp,18)} LP`;
+  }catch{ $("reservesBox").textContent="-"; $("lpBox").textContent="-"; }
+}
+
 async function onAddLiq(){
   try{
-    const base = getTokenInfo("gUSDT");
-    const quote = getTokenInfo($("toToken").value); // quote dari pilihan "to"
-    const baseAmtH = $("liqBase").value.trim();
-    const quoteAmtH= $("liqQuote").value.trim();
-    if(!baseAmtH || !quoteAmtH) return alert("Isi jumlah Base & Quote.");
+    const [A,B]=liqPair();
+    const aH=$("liqAmtA").value.trim(), bH=$("liqAmtB").value.trim();
+    if(!aH||!bH) return alert("Isi Amount A dan B.");
+    const aAmt=parseU(aH,A.decimals), bAmt=parseU(bH,B.decimals);
 
-    const amm = new ethers.Contract(AMM.addr, TT_AMM_ABI, signer);
-    const baseAmt  = parseU(baseAmtH,  base.decimals);
-    const quoteAmt = parseU(quoteAmtH, quote.decimals);
+    const c=new ethers.Contract(AMM.addr, TT_AMM_ABI, signer);
+    await ensureApprove(A.addr, AMM.addr, aAmt);
+    await ensureApprove(B.addr, AMM.addr, bAmt);
 
-    await ensureApprove(base.addr,  AMM.addr, baseAmt);
-    await ensureApprove(quote.addr, AMM.addr, quoteAmt);
-
-    log("💧 Add Liquidity gUSDT / "+quote.symbol+"...");
-    const tx = await amm.addLiquidity(base.addr, quote.addr, baseAmt, quoteAmt);
-    log("⏳ TX: "+tx.hash); await tx.wait();
-    log("✅ Liquidity added");
-    await refreshReserves();
+    log(`💧 Add Liquidity ${A.symbol}/${B.symbol}...`);
+    const tx=await c.addLiquidity(A.addr, B.addr, aAmt, bAmt);
+    log("⏳ TX: "+tx.hash); await tx.wait(); log("✅ Liquidity added");
+    await refreshLiqPanel();
   }catch(e){ log("❌ Add error: "+(e.reason||e.message||e)); }
 }
 
 async function onRemoveLiq(){
   try{
-    const base = getTokenInfo("gUSDT");
-    const quote= getTokenInfo($("toToken").value);
-    const lpAmtH = $("liqBase").value.trim(); // gunakan field kiri sebagai LP amt agar simple
-    if(!lpAmtH) return alert("Isi nilai LP yang mau diburn (dalam 18 desimal, ex: 0.1).");
+    const [A,B]=liqPair();
+    const lpH=$("lpAmt").value.trim();
+    if(!lpH) return alert("Isi LP to remove (18 desimal).");
+    const lpAmt=ethers.utils.parseUnits(lpH,18);
 
-    const amm = new ethers.Contract(AMM.addr, TT_AMM_ABI, signer);
-    const lpAmt = ethers.utils.parseUnits(lpAmtH, 18);
-
-    log("🧹 Remove LP...");
-    const tx = await amm.removeLiquidity(base.addr, quote.addr, lpAmt);
-    log("⏳ TX: "+tx.hash); await tx.wait();
-    log("✅ Remove liquidity done");
-    await refreshReserves();
+    const c=new ethers.Contract(AMM.addr, TT_AMM_ABI, signer);
+    log(`🧹 Remove LP ${A.symbol}/${B.symbol}...`);
+    const tx=await c.removeLiquidity(A.addr, B.addr, lpAmt);
+    log("⏳ TX: "+tx.hash); await tx.wait(); log("✅ Remove liquidity done");
+    await refreshLiqPanel();
   }catch(e){ log("❌ Remove error: "+(e.reason||e.message||e)); }
 }
 
 /* =========================
-   UI Bindings
+   Bindings & Init
    ========================= */
 $("btnConnect").onclick = connect;
 $("btnSwap").onclick    = onSwap;
+
+$("fromToken").onchange = ()=>{ refreshSwapBalances(); refreshSwapReserves(); };
+$("toToken").onchange   = ()=>{ refreshSwapBalances(); refreshSwapReserves(); };
+
 $("btnAdd").onclick     = onAddLiq;
 $("btnRemove").onclick  = onRemoveLiq;
+$("liqTokenA").onchange = refreshLiqPanel;
+$("liqTokenB").onchange = refreshLiqPanel;
 
-$("fromToken").onchange = ()=>{ refreshBalances(); };
-$("toToken").onchange   = ()=>{ refreshBalances(); refreshReserves(); };
-$("fromAmount").oninput = ()=>{ /* optional: calc quote preview */ };
-
-$("tabSwap").onclick = ()=>{ 
+$("tabSwap").onclick = ()=>{
   $("tabSwap").classList.add("active");
   $("tabLiq").classList.remove("active");
   $("panelSwap").classList.add("active");
   $("panelLiq").classList.remove("active");
 };
-$("tabLiq").onclick = ()=>{ 
+$("tabLiq").onclick = ()=>{
   $("tabLiq").classList.add("active");
   $("tabSwap").classList.remove("active");
   $("panelLiq").classList.add("active");
   $("panelSwap").classList.remove("active");
 };
 
-/* Init */
-fillTokenSelects();
+initSelects();
 </script>
 </body>
 </html>
